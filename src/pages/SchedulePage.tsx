@@ -81,7 +81,7 @@ const SchedulePage: React.FC = () => {
   return (
     <>
       <Helmet>
-        <title>Schedule | Aadhyayan 2026</title>
+        <title>Schedule | Adhyayan 2026</title>
         <meta name="description" content="Detailed schedule of workshops, competitions, and events at MED HUNT 2026." />
       </Helmet>
 
@@ -94,7 +94,7 @@ const SchedulePage: React.FC = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <h1 className="font-montserrat font-bold text-slate-900 mb-6">AADHYAYAN Schedule</h1>
+            <h1 className="font-montserrat font-bold text-slate-900 mb-6">ADHYAYAN Schedule</h1>
             <p className="text-xl text-slate-500">
               Six days of learning, innovation, and celebration
             </p>

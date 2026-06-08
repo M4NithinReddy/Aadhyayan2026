@@ -212,8 +212,8 @@ const CompetitionsPage: React.FC = () => {
   return (
     <>
       <Helmet>
-        <title>Competitions | AADHYAYAN 2026</title>
-        <meta name="description" content="Participate in various medical competitions at AADHYAYAN 2026. Showcase your skills, win prizes, and gain recognition." />
+        <title>Competitions | ADHYAYAN 2026</title>
+        <meta name="description" content="Participate in various medical competitions at ADHYAYAN 2026. Showcase your skills, win prizes, and gain recognition." />
       </Helmet>
 
       {/* Hero Section */}

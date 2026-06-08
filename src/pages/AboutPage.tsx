@@ -125,8 +125,8 @@ const AboutPage: React.FC = () => {
   return (
     <>
       <Helmet>
-        <title>About AADHYAYAN 2026 | Andhra Medical College</title>
-        <meta name="description" content="Learn about AADHYAYAN 2026, the flagship medical fest of Andhra Medical College — our mission, leadership, campus, and values." />
+        <title>About ADHYAYAN 2026 | Andhra Medical College</title>
+        <meta name="description" content="Learn about ADHYAYAN 2026, the flagship medical fest of Andhra Medical College — our mission, leadership, campus, and values." />
       </Helmet>
 
       {/* ── Hero ── */}
@@ -151,7 +151,7 @@ const AboutPage: React.FC = () => {
               Est. 1923 · A Century of Medical Excellence
             </span>
             <h1 className="font-playfair font-bold text-5xl md:text-7xl leading-tight mb-6">
-              About <span className="text-sky-400">AADHYAYAN</span> 2026
+              About <span className="text-sky-400">ADHYAYAN</span> 2026
             </h1>
             <p className="text-xl text-white/60 font-jakarta max-w-2xl mx-auto leading-relaxed">
               A legacy forged over a century — now carried forward by the brightest minds in medical education.
@@ -179,7 +179,7 @@ const AboutPage: React.FC = () => {
                 Nurturing <span className="text-sky-600">Tomorrow's</span> Healers
               </h2>
               <p className="text-lg text-slate-500 font-jakarta leading-relaxed max-w-3xl mx-auto mb-10">
-                AADHYAYAN 2026 is the flagship annual medical fest of Andhra Medical College, Visakhapatnam — one of India's most prestigious government medical institutions. Our fest is a convergence of intellectual, clinical, and creative excellence, designed to inspire the next generation of medical professionals to innovate, collaborate, and lead.
+                ADHYAYAN 2026 is the flagship annual medical fest of Andhra Medical College, Visakhapatnam — one of India's most prestigious government medical institutions. Our fest is a convergence of intellectual, clinical, and creative excellence, designed to inspire the next generation of medical professionals to innovate, collaborate, and lead.
               </p>
               <div className="flex flex-wrap gap-4 justify-center">
                 {['Clinical Workshops', 'Research Competitions', 'Medical Debates', 'Creative Events', 'Guest Lectures'].map((tag) => (
@@ -389,7 +389,7 @@ const AboutPage: React.FC = () => {
               Join Our Legacy of Excellence
             </h2>
             <p className="max-w-2xl mx-auto text-lg text-white/60 font-jakarta mb-10 leading-relaxed">
-              Be part of AADHYAYAN 2026 and contribute to the future of medical innovation at one of India's most storied institutions.
+              Be part of ADHYAYAN 2026 and contribute to the future of medical innovation at one of India's most storied institutions.
             </p>
             <div className="flex flex-wrap gap-4 justify-center">
               <a

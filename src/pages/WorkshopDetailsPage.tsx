@@ -454,7 +454,7 @@ const WorkshopDetailsPage: React.FC = () => {
   return (
     <>
       <Helmet>
-        <title>{workshop.title} | AADHYAYAN 2026</title>
+        <title>{workshop.title} | ADHYAYAN 2026</title>
         <meta name="description" content={workshop.description} />
       </Helmet>
 

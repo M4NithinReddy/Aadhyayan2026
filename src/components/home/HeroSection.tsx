@@ -78,7 +78,7 @@ const HeroSection: React.FC = () => {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="font-outfit font-extrabold text-5xl md:text-6xl lg:text-8xl tracking-tight leading-none mb-6 text-white"
           >
-            AADHYAYAN <span className="bg-gradient-to-r from-sky-400 to-indigo-400 bg-clip-text text-transparent drop-shadow-sm">2026</span>
+            ADHYAYAN <span className="bg-gradient-to-r from-sky-400 to-indigo-400 bg-clip-text text-transparent drop-shadow-sm">2026</span>
           </motion.h1>
 
           <motion.div

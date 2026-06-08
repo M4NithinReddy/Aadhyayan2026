@@ -76,8 +76,8 @@ const HomePage: React.FC = () => {
   return (
     <>
       <Helmet>
-        <title>AADHYAYAN 2026 | A Festival of Fire, A Symphony of Scholars</title>
-        <meta name="description" content="Join AADHYAYAN 2026 - Where dreams take shape, and ideas take flight. A celebration of thought, talent, and transformation in medical excellence." />
+        <title>ADHYAYAN 2026 | A Festival of Fire, A Symphony of Scholars</title>
+        <meta name="description" content="Join ADHYAYAN 2026 - Where dreams take shape, and ideas take flight. A celebration of thought, talent, and transformation in medical excellence." />
       </Helmet>
 
       <HeroSection />
@@ -170,14 +170,14 @@ const HomePage: React.FC = () => {
         </div>
       </section>
 
-      {/* About AADHYAYAN Section */}
+      {/* About ADHYAYAN Section */}
       <section className="section bg-slate-50 border-t border-b border-slate-150">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] bg-sky-500/5 rounded-full blur-[150px] pointer-events-none z-0"></div>
 
         <div className="container relative z-10">
           <SectionTitle
             subtitle="About the Event"
-            title="AADHYAYAN 2026"
+            title="ADHYAYAN 2026"
             alignment="center"
           />
 
@@ -195,13 +195,13 @@ const HomePage: React.FC = () => {
                 <span className="bg-gradient-to-r from-sky-600 to-indigo-600 bg-clip-text text-transparent">A Symphony of Scholars</span>
               </h3>
               <p className="text-slate-600 font-jakarta leading-relaxed">
-                The Incendios, true to their name, burn with the flame of excellence. They have woven a fest not with mere events, but with visions — of a world where learning is not a task, but a triumph; not a burden, but a bliss. AADHYAYAN is more than a gathering — it is a pilgrimage of intellect.
+                The Incendios, true to their name, burn with the flame of excellence. They have woven a fest not with mere events, but with visions — of a world where learning is not a task, but a triumph; not a burden, but a bliss. ADHYAYAN is more than a gathering — it is a pilgrimage of intellect.
               </p>
               
               <div className="p-6 bg-sky-50/50 border border-sky-100 rounded-2xl flex gap-4">
                 <Quote className="h-8 w-8 text-sky-600 shrink-0 transform -scale-x-100" />
                 <p className="text-slate-600 font-jakarta italic leading-relaxed text-sm">
-                  In Visakhapatnam's sacred soil, heart is KING GEORGE. Its voice is AADHYAYAN. The flame is INCENDIOS. Together they just IGNITE.
+                  In Visakhapatnam's sacred soil, heart is KING GEORGE. Its voice is ADHYAYAN. The flame is INCENDIOS. Together they just IGNITE.
                 </p>
               </div>
               <div className="pt-2">
@@ -331,7 +331,7 @@ const HomePage: React.FC = () => {
               Ready to Join the Symphony of Scholars?
             </h2>
             <p className="text-slate-500 font-jakarta text-base md:text-lg leading-relaxed max-w-2xl mx-auto">
-              Secure your spot at AADHYAYAN 2026. Join interactive workshops, pitch your diagnostics solutions, and network with leading practitioners.
+              Secure your spot at ADHYAYAN 2026. Join interactive workshops, pitch your diagnostics solutions, and network with leading practitioners.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4">
               <Link to="/workshops" className="btn-primary px-8 py-3.5 text-white">
@@ -411,7 +411,7 @@ const HomePage: React.FC = () => {
                   allowFullScreen
                   loading="lazy"
                   referrerPolicy="no-referrer-when-downgrade"
-                  title="Aadhyayan 2026 Map"
+                  title="Adhyayan 2026 Map"
                 ></iframe>
               </div>
             </motion.div>
