@@ -23,7 +23,7 @@ const Footer: React.FC = () => {
           <div className="space-y-6">
             <Link to="/" className="flex items-center gap-3 font-montserrat font-bold text-xl group">
               <LightbulbIcon className="h-6 w-6 text-sky-600 group-hover:rotate-12 transition-transform duration-300" />
-              <span className="text-slate-800 group-hover:text-sky-600 transition-colors">AADHYAYAN 2026</span>
+              <span className="text-slate-800 group-hover:text-sky-600 transition-colors">ADHYAYAN 2026</span>
             </Link>
             <p className="text-slate-500 text-sm leading-relaxed">
               A Festival of Fire, A Symphony of Scholars. The flagship medical symposium and innovation summit hosted by Andhra Medical College, Visakhapatnam.
@@ -88,7 +88,7 @@ const Footer: React.FC = () => {
           <div>
             <h4 className="text-slate-900 font-montserrat font-semibold mb-6 tracking-wide uppercase text-xs">Stay Updated</h4>
             <p className="text-slate-500 text-sm mb-4 leading-relaxed">
-              Subscribe to our newsletter for the latest updates on AADHYAYAN 2026.
+              Subscribe to our newsletter for the latest updates on ADHYAYAN 2026.
             </p>
             <form className="flex flex-col space-y-3">
               <input
@@ -109,7 +109,7 @@ const Footer: React.FC = () => {
 
         <div className="border-t border-slate-100 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center">
           <p className="text-slate-500 text-xs font-medium">
-            © {currentYear} AADHYAYAN 2026, Andhra Medical College. All rights reserved.
+            © {currentYear} ADHYAYAN 2026, Andhra Medical College. All rights reserved.
           </p>
         </div>
       </div>

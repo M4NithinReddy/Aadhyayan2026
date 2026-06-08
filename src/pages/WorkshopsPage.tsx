@@ -132,8 +132,8 @@ const WorkshopsPage: React.FC = () => {
   return (
     <>
       <Helmet>
-        <title>Workshops | AADHYAYAN 2026</title>
-        <meta name="description" content="Join our specialized medical workshops at AADHYAYAN 2026. Learn from experts, gain hands-on experience, and enhance your medical skills." />
+        <title>Workshops | ADHYAYAN 2026</title>
+        <meta name="description" content="Join our specialized medical workshops at ADHYAYAN 2026. Learn from experts, gain hands-on experience, and enhance your medical skills." />
       </Helmet>
 
       {/* Hero Section */}

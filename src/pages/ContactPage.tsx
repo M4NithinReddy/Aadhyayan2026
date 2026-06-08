@@ -35,8 +35,8 @@ const ContactPage: React.FC = () => {
   return (
     <>
       <Helmet>
-        <title>Contact Us | AADHYAYAN 2026</title>
-        <meta name="description" content="Get in touch with the AADHYAYAN 2026 team. We're here to help with any questions about the event, registration, or accommodation." />
+        <title>Contact Us | ADHYAYAN 2026</title>
+        <meta name="description" content="Get in touch with the ADHYAYAN 2026 team. We're here to help with any questions about the event, registration, or accommodation." />
       </Helmet>
 
       {/* Hero Section */}

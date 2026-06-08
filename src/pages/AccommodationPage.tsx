@@ -49,8 +49,8 @@ const AccommodationPage: React.FC = () => {
   return (
     <>
       <Helmet>
-        <title>Accommodation | AADHYAYAN 2026</title>
-        <meta name="description" content="Find comfortable and affordable accommodation options for AADHYAYAN 2026 participants near Andhra Medical College, Visakhapatnam." />
+        <title>Accommodation | ADHYAYAN 2026</title>
+        <meta name="description" content="Find comfortable and affordable accommodation options for ADHYAYAN 2026 participants near Andhra Medical College, Visakhapatnam." />
       </Helmet>
 
       {/* Hero Section */}

@@ -66,7 +66,7 @@ const Header: React.FC<HeaderProps> = ({ isScrolled }) => {
             />
           </span>
           <span className="tracking-tight text-white group-hover:text-sky-400 transition-colors">
-            AADHYAYAN 2026
+            ADHYAYAN 2026
           </span>
         </Link>
 
