@@ -30,18 +30,16 @@ const HeroSection: React.FC = () => {
 
   return (
     <section className="relative min-h-screen flex items-center bg-[#020617] overflow-hidden">
-      {/* Background video */}
+      {/* Background Image and decoration */}
       <div className="absolute inset-0 z-0">
-        <video
-          autoPlay
-          muted
-          playsInline
-          className="absolute inset-0 w-full h-full object-cover scale-[1.02]"
-        >
-          <source src="/logoanimation.mp4" type="video/mp4" />
-          Your browser does not support the video tag.
-        </video>
-        <div className="absolute inset-0 bg-[#020617]/75 backdrop-blur-[2px]"></div>
+        <img 
+          src="/HEROBG.jpeg" 
+          alt="Hero Background" 
+          className="w-full h-full object-cover opacity-45 mix-blend-luminosity"
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-[#020617]/50 via-[#020617]/80 to-[#020617] pointer-events-none" />
+        <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-sky-500/10 rounded-full blur-[120px] pointer-events-none"></div>
+        <div className="absolute bottom-0 right-1/4 w-[500px] h-[500px] bg-indigo-500/10 rounded-full blur-[120px] pointer-events-none"></div>
       </div>
 
       {/* Content */}
@@ -88,7 +86,7 @@ const HeroSection: React.FC = () => {
             className="mb-8"
           >
             <p className="text-xl md:text-2xl text-slate-300 font-montserrat font-medium mb-3">
-              A Festival of Fire, A Symphony of Scholars
+              Illuminating the Art of Medicine
             </p>
             <p className="text-sky-400 font-montserrat font-semibold text-base md:text-lg tracking-wide uppercase">
               Illuminate Minds, Ignite Innovations

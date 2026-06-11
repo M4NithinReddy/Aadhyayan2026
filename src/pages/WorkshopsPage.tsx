@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -6,128 +6,162 @@ import { Calendar, Clock, MapPin, ArrowRight, ShieldCheck, Sparkles, BookOpen } 
 import { InteractiveTravelCard } from '../components/ui/3d-card';
 import SectionTitle from '../components/ui/SectionTitle';
 
+const defaultWorkshops = [
+  {
+    id: 'ophthalmology',
+    _id: 'ophthalmology',
+    title: 'Ophthalmology Workshop',
+    category: 'Specialties',
+    description: 'Comprehensive training in eye examination, fundoscopy, and basic surgical techniques.',
+    date: 'June 24, 2026',
+    venue: 'Govt. Regional Eye Hospital, RAMA TALKIES',
+    price: 599,
+    image: '/workshops/Ophthalmology.png'
+  },
+  {
+    id: 'orthopaedics',
+    _id: 'orthopaedics',
+    title: 'Orthopaedics Workshop',
+    category: 'Specialties',
+    description: 'Learn essential splinting, bandaging, casting techniques, and fracture management.',
+    date: 'June 26, 2026',
+    time: 'AM & PM Sessions',
+    venue: 'AMCOSA',
+    price: 499,
+    image: '/workshops/Orthopedics.png'
+  },
+  {
+    id: 'anaesthesia',
+    _id: 'anaesthesia',
+    title: 'Anaesthesia Workshop',
+    category: 'Clinical',
+    description: 'Comprehensive training in anaesthesia administration, intubation, and basic life support.',
+    date: 'June 27-28, 2026',
+    time: 'AM & PM Sessions',
+    venue: 'NELS Skill Lab, AMC',
+    price: 449,
+    image: '/workshops/Anesthesia.png'
+  },
+  {
+    id: 'surgery',
+    _id: 'surgery',
+    title: 'Surgery Workshop',
+    category: 'Clinical',
+    description: 'Hands-on training in basic surgical knotting, suturing techniques, and wound management.',
+    date: 'June 24-27, 2026',
+    venue: 'AMCOSA',
+    price: 499,
+    image: '/workshops/Surgery.png'
+  },
+  {
+    id: 'obgyn1',
+    _id: 'obgyn1',
+    title: 'ObGyn Workshop - 1',
+    category: 'Specialties',
+    description: 'Essential obstetric and gynecological procedures training, including deliveries.',
+    date: 'June 25-26, 2026',
+    venue: 'AMCOSA',
+    price: 299,
+    image: '/workshops/Gynaecology.png'
+  },
+  {
+    id: 'obgyn2',
+    _id: 'obgyn2',
+    title: 'ObGyn Workshop - 2',
+    category: 'Specialties',
+    description: 'Advanced obstetric and gynecological procedures training and emergency management.',
+    date: 'June 27-28, 2026',
+    venue: 'AMCOSA',
+    price: 299,
+    image: '/workshops/Gynaecology.png'
+  },
+  {
+    id: 'ent',
+    _id: 'ent',
+    title: 'ENT Workshop',
+    category: 'Specialties',
+    description: 'Comprehensive training in otorhinolaryngology diagnostics and clinical procedures.',
+    date: 'June 26, 2026',
+    venue: 'Govt. ENT Hospital, Pedda Waltair',
+    price: 349,
+    image: '/workshops/Ent.png'
+  },
+  {
+    id: 'pediatrics',
+    _id: 'pediatrics',
+    title: 'Pediatrics Workshop',
+    category: 'Specialties',
+    description: 'Essential pediatric resuscitation, clinical care, and developmental assessment training.',
+    date: 'June 25, 2026',
+    venue: 'Dept. of Pediatrics, AMC',
+    price: 499,
+    image: '/workshops/Pediatrics.png'
+  },
+  {
+    id: 'community',
+    _id: 'community',
+    title: 'Community Medicine Workshop',
+    category: 'Specialties',
+    description: 'Training in community health assessment, epidemiology, and preventive medicine.',
+    date: 'June 25-26, 2026',
+    venue: 'AMCOSA',
+    price: 349,
+    image: '/workshops/Community_Medicine.png'
+  },
+  {
+    id: 'fmt',
+    _id: 'fmt',
+    title: 'Forensic Medicine Workshop',
+    category: 'Specialties',
+    description: 'Hands-on forensic medicine, clinical toxicology, and basic autopsy observation.',
+    date: 'June 24-27, 2026',
+    venue: 'Mortuary, Dept. of FMT, AMC KGH',
+    price: 649,
+    image: '/workshops/Forensic_Medicine.png'
+  },
+  {
+    id: 'medicine',
+    _id: 'medicine',
+    title: 'Medicine Workshop',
+    category: 'Clinical',
+    description: 'Comprehensive general medical skills, ECG analysis, and patient assessment training.',
+    date: 'June 24, 2026',
+    venue: 'AMCOSA',
+    price: 399,
+    image: '/workshops/Medicine.png'
+  }
+];
+
 const WorkshopsPage: React.FC = () => {
   const navigate = useNavigate();
-  const [activeTab, setActiveTab] = useState<'All' | 'Clinical' | 'Specialties'>('All');
+  const [workshops, setWorkshops] = useState<any[]>(defaultWorkshops);
+  const [activeTab, setActiveTab] = useState<string>('All');
 
-  const workshops = [
-    {
-      id: 'ophthalmology',
-      title: 'Ophthalmology Workshop',
-      category: 'Specialties',
-      description: 'Comprehensive training in eye examination, fundoscopy, and basic surgical techniques.',
-      date: 'June 24, 2026',
-      venue: 'Govt. Regional Eye Hospital, RAMA TALKIES',
-      price: 599,
-      image: '/workshops/Ophthalmology.png'
-    },
-    {
-      id: 'orthopaedics',
-      title: 'Orthopaedics Workshop',
-      category: 'Specialties',
-      description: 'Learn essential splinting, bandaging, casting techniques, and fracture management.',
-      date: 'June 26, 2026',
-      time: 'AM & PM Sessions',
-      venue: 'AMCOSA',
-      price: 499,
-      image: '/workshops/Orthopedics.png'
-    },
-    {
-      id: 'anaesthesia',
-      title: 'Anaesthesia Workshop',
-      category: 'Clinical',
-      description: 'Comprehensive training in anaesthesia administration, intubation, and basic life support.',
-      date: 'June 27-28, 2026',
-      time: 'AM & PM Sessions',
-      venue: 'NELS Skill Lab, AMC',
-      price: 449,
-      image: '/workshops/Anesthesia.png'
-    },
-    {
-      id: 'surgery',
-      title: 'Surgery Workshop',
-      category: 'Clinical',
-      description: 'Hands-on training in basic surgical knotting, suturing techniques, and wound management.',
-      date: 'June 24-27, 2026',
-      venue: 'AMCOSA',
-      price: 499,
-      image: '/workshops/Surgery.png'
-    },
-    {
-      id: 'obgyn1',
-      title: 'ObGyn Workshop - 1',
-      category: 'Specialties',
-      description: 'Essential obstetric and gynecological procedures training, including deliveries.',
-      date: 'June 25-26, 2026',
-      venue: 'AMCOSA',
-      price: 299,
-      image: '/workshops/Gynaecology.png'
-    },
-    {
-      id: 'obgyn2',
-      title: 'ObGyn Workshop - 2',
-      category: 'Specialties',
-      description: 'Advanced obstetric and gynecological procedures training and emergency management.',
-      date: 'June 27-28, 2026',
-      venue: 'AMCOSA',
-      price: 299,
-      image: '/workshops/Gynaecology.png'
-    },
-    {
-      id: 'ent',
-      title: 'ENT Workshop',
-      category: 'Specialties',
-      description: 'Comprehensive training in otorhinolaryngology diagnostics and clinical procedures.',
-      date: 'June 26, 2026',
-      venue: 'Govt. ENT Hospital, Pedda Waltair',
-      price: 349,
-      image: '/workshops/Ent.png'
-    },
-    {
-      id: 'pediatrics',
-      title: 'Pediatrics Workshop',
-      category: 'Specialties',
-      description: 'Essential pediatric resuscitation, clinical care, and developmental assessment training.',
-      date: 'June 25, 2026',
-      venue: 'Dept. of Pediatrics, AMC',
-      price: 499,
-      image: '/workshops/Pediatrics.png'
-    },
-    {
-      id: 'community',
-      title: 'Community Medicine Workshop',
-      category: 'Specialties',
-      description: 'Training in community health assessment, epidemiology, and preventive medicine.',
-      date: 'June 25-26, 2026',
-      venue: 'AMCOSA',
-      price: 349,
-      image: '/workshops/Community_Medicine.png'
-    },
-    {
-      id: 'fmt',
-      title: 'Forensic Medicine Workshop',
-      category: 'Specialties',
-      description: 'Hands-on forensic medicine, clinical toxicology, and basic autopsy observation.',
-      date: 'June 24-27, 2026',
-      venue: 'Mortuary, Dept. of FMT, AMC KGH',
-      price: 649,
-      image: '/workshops/Forensic_Medicine.png'
-    },
-    {
-      id: 'medicine',
-      title: 'Medicine Workshop',
-      category: 'Clinical',
-      description: 'Comprehensive general medical skills, ECG analysis, and patient assessment training.',
-      date: 'June 24, 2026',
-      venue: 'AMCOSA',
-      price: 399,
-      image: '/workshops/Medicine.png'
-    }
-  ];
+  useEffect(() => {
+    fetch('http://localhost:5000/api/workshops')
+      .then((res) => {
+        if (!res.ok) throw new Error('Failed to fetch');
+        return res.json();
+      })
+      .then((data) => {
+        if (Array.isArray(data) && data.length > 0) {
+          const mapped = data.map((w: any) => ({
+            ...w,
+            id: w.id || w._id
+          }));
+          setWorkshops(mapped);
+        }
+      })
+      .catch((err) => {
+        console.warn('API down, using local fallback workshops data.', err);
+      });
+  }, []);
+
+  const categories = ['All', ...Array.from(new Set(workshops.map(w => w.category || 'General')))];
 
   const filteredWorkshops = activeTab === 'All' 
     ? workshops 
-    : workshops.filter(w => w.category === activeTab);
+    : workshops.filter(w => (w.category || 'General') === activeTab);
 
   return (
     <>
@@ -170,8 +204,8 @@ const WorkshopsPage: React.FC = () => {
           />
 
           {/* Category tabs */}
-          <div className="flex justify-center gap-3 mt-10 mb-12">
-            {(['All', 'Clinical', 'Specialties'] as const).map((tab) => (
+          <div className="flex justify-center gap-3 mt-10 mb-12 flex-wrap">
+            {categories.map((tab) => (
               <button
                 key={tab}
                 onClick={() => setActiveTab(tab)}
@@ -181,7 +215,7 @@ const WorkshopsPage: React.FC = () => {
                     : 'bg-slate-100 text-slate-600 border border-slate-200 hover:bg-slate-200 hover:text-slate-900'
                 }`}
               >
-                {tab === 'Clinical' ? 'Clinical Core' : tab}
+                {tab}
               </button>
             ))}
           </div>
@@ -208,9 +242,9 @@ const WorkshopsPage: React.FC = () => {
                     subtitle={`${workshop.date || 'Multiple Dates'} | ${workshop.venue}`}
                     imageUrl={workshop.image}
                     actionText={`Register - ₹${workshop.price}`}
-                    href={`/workshops/${workshop.id}`}
+                    href={`/workshops/${workshop.id || workshop._id}`}
                     onActionClick={() => {
-                      navigate(`/workshops/${workshop.id}`);
+                      navigate(`/workshops/${workshop.id || workshop._id}`);
                     }}
                     className="w-full"
                   />

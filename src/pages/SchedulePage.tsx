@@ -4,8 +4,19 @@ import { motion } from 'framer-motion';
 import { Calendar, Clock, MapPin, Users } from 'lucide-react';
 import SectionTitle from '../components/ui/SectionTitle';
 
+interface Session {
+  time: string;
+  events: string[];
+}
+
+interface DaySchedule {
+  date: string;
+  title?: string;
+  sessions: Session[];
+}
+
 const SchedulePage: React.FC = () => {
-  const scheduleData = {
+  const scheduleData: Record<string, DaySchedule> = {
     day1: {
       date: '23',
       title: 'MED HUNT',
@@ -42,7 +53,7 @@ const SchedulePage: React.FC = () => {
       sessions: [
         {
           time: '9am to 12 pm',
-          events: ['Ortho', 'ENT', 'SPM' , 'Debate']
+          events: ['Ortho', 'ENT', 'SPM', 'Debate']
         },
         {
           time: '1pm to 4 pm',
@@ -59,7 +70,7 @@ const SchedulePage: React.FC = () => {
         },
         {
           time: '1pm to 4 pm',
-          events: ['Anaesthesia', 'FMT', 'OBGYN-2', 'Music Band' , 'Surgery']
+          events: ['Anaesthesia', 'FMT', 'OBGYN-2', 'Music Band', 'Surgery']
         }
       ]
     },
@@ -88,7 +99,7 @@ const SchedulePage: React.FC = () => {
       {/* Hero Section */}
       <section className="pt-32 pb-20 bg-gradient-to-b from-white to-slate-50 text-slate-800 border-b border-slate-100">
         <div className="container">
-          <motion.div 
+          <motion.div
             className="max-w-3xl mx-auto text-center"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}

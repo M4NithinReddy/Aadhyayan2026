@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Camera, Video, MessageSquare, PenTool, Brain, Search, Presentation, Trophy, Calendar, Users, Clock, MapPin, X, Phone, Sparkles, AlertCircle, HelpCircle } from 'lucide-react';
 import { InteractiveTravelCard } from '../components/ui/3d-card';
 import SectionTitle from '../components/ui/SectionTitle';
+import RegistrationModal from '../components/RegistrationModal';
 
 interface Competition {
   id: string;
@@ -31,181 +32,230 @@ interface Competition {
   };
 }
 
-const CompetitionsPage: React.FC = () => {
-  const [selectedCompetition, setSelectedCompetition] = useState<Competition | null>(null);
-  const [searchQuery, setSearchQuery] = useState('');
-  const [activeTab, setActiveTab] = useState<'All' | 'Scientific' | 'Creative'>('All');
-
-  const competitions: Competition[] = [
-    {
-      id: 'build-diagnosis',
-      title: 'Build the Diagnosis',
-      category: 'Scientific',
-      icon: <Brain className="h-6 w-6" />,
-      description: 'A case-based diagnostic puzzle combining patient history, clinical signs, lab results, and logical reasoning.',
-      image: '/competitions/Diagnosis.png',
-      details: {
-        rules: [
-          'All UG students can participate (including interns)',
-          'A team must consist of exactly four members',
-          'Case-based diagnostic rounds and rapid-fire challenges',
-          'Tests quick clinical decision-making, history matching, and diagnostic reasoning',
-        ],
-        fee: '100/-',
-        contact: {
-          name: 'Harikrishna',
-          phone: '+91 91825 45949'
-        }
-      }
-    },
-    {
-      id: 'debate',
-      title: 'Medical Debate',
-      category: 'Creative',
-      icon: <MessageSquare className="h-6 w-6" />,
-      description: 'Engage in thought-provoking formal discussions and rebuttals on critical bioethical and medical topics.',
-      image: '/competitions/Medical_debate.png',
-      details: {
-        rules: [
-          'Three-round structured debate formats',
-          'Opening statements: 3 minutes per team',
-          'Cross-questioning and direct rebuttals: 4 minutes',
-          'Closing remarks and audience interaction summary',
-          'Respectful dialogue; personal attacks result in direct disqualification'
-        ],
-        guidelines: [
-          'Judged on argumentation relevance, citation of studies, delivery, and structure'
-        ],
-        contact: {
-          name: 'Jaideep',
-          phone: '+91 90102 38700'
-        },
-        topic: 'Euthanasia: Compassionate Choice or Moral Misstep'
-      }
-    },
-    {
-      id: 'essay',
-      title: 'Essay Writing',
-      category: 'Scientific',
-      icon: <PenTool className="h-6 w-6" />,
-      description: 'Express your insights on contemporary medical challenges through academically rigorous and compelling essays.',
-      image: '/competitions/essaywriting.png',
-      details: {
-        topic: 'De-Stigmatising the Demon: Reframing HIV Beyond Fear and Prejudice',
-        contact: {
-          name: 'Renuka Priya',
-          phone: '+91 95738 70164'
-        },
-        rules: [
-          'Essay must be written between 1000 - 1500 words',
-          'Formatting should align with standardized MLA guidelines for citations',
-          'Plagiarism of any form leads to instant disqualification',
-        ],
-      }
-    },
-    {
-      id: 'reels',
-      title: 'Medical Reels',
-      category: 'Creative',
-      icon: <Video className="h-6 w-6" />,
-      description: 'Create engaging, informative, and visually stunning short-form social video content explaining medical phenomena.',
-      image: '/competitions/Medical_Reels.png',
-      details: {
-        rules: [
-          'Pure vector animations are not accepted; must involve live presentation/acting',
-          'Abusive language, copyrighted music, and censored material strictly prohibited',
-          'Top 3 selected films will be screened live during Movie Night (28th June)',
-          'All final reel file submissions must be completed by 25th June'
-        ],
-        guidelines: [
-          'Judged on conceptual accuracy, acting/expression, sound clarity, and cinematography'
-        ],
-        contact: {
-          name: 'Atchuth Ram',
-          phone: '+91 85238 63076'
-        }
-      }
-    },
-    {
-      id: 'seminar',
-      title: 'Integrated Seminar',
-      category: 'Scientific',
-      icon: <Presentation className="h-6 w-6" />,
-      description: 'Present clinical cases and explain complex medical topics from pathophysiological mechanism to clinical management.',
-      image: '/competitions/Seminar.png',
-      details: {
-        rules: [
-          'Presentations must follow the recommended structured formatting',
-          'A maximum of 10 slides is permitted (excluding title and reference slide)',
-          'Utilisation of visual models, flowcharts, and diagrams is highly encouraged',
-          'Registration fee: ₹100'
-        ],
-        guidelines: [
-          'Slide 1: Title and clinical vignette overview',
-          'Slide 2-3: Pathophysiology (molecular/cellular models)',
-          'Slide 4: Clinical Presentation (symptomatology, examination)',
-          'Slide 5: Diagnostic investigations with clinical rationale',
-          'Slide 6-7: Therapeutic management (evidence-based updates)',
-          'Slide 8: Crucial clinical takeaways',
-          'Slide 9: Recent guidelines (AHA, ESC, GINA, etc.)',
-          'Slide 10: References'
-        ],
-        judgingCriteria: [
-          'Scientific accuracy & literature citation depth - 10 marks',
-          'Integration of pathophysiology with management outcomes - 10 marks',
-          'Clarity, visual appeal, & slide layout - 10 marks',
-          'Time adherence & public speaking delivery - 10 marks',
-          'Handling Q&A jury questions - 10 marks'
-        ],
-        topics: [
-          'Chronic Kidney Disease (CKD)',
-          'Ischemic Stroke Pathophysiology',
-          'Diabetes Mellitus & Microvascular Complications',
-          'Hypo- and Hyperthyroidism Emergency Care',
-          'Acute Kidney Injury (AKI) in Critically Ill Patients',
-          'Gastrointestinal Bleed Management',
-          'Rheumatoid Arthritis Immunotherapy',
-          'Hypertensive Urgency and Emergency care',
-          'Acute Coronary Syndrome (ACS) Timelines',
-          'SLE (Lupus Nephritis Pathophysiology)',
-          'Sepsis Bundle Management (Hour-1 bundle)'
-        ],
-        contact: {
-          name: 'Shubham',
-          phone: '+91 88856 60398'
-        },
-        awards: [
-          'Best Integrated Seminar Presentation - Trophy & Cash Awards'
-        ]
-      }
-    },
-    {
-      id: 'photography',
-      title: 'Photography Competition',
-      category: 'Creative',
-      icon: <Camera className="h-6 w-6" />,
-      description: 'Capture the essence of college life, medical heritage, and campus beauty through your photography lens.',
-      image: '/competitions/Photography.png',
-      details: {
-        theme: 'Our Heritage & Campus Life',
-        rules: [
-          'Submissions must include a 2-line conceptual description',
-          'All photographs must be captured on-campus during the fest week',
-          'Images must remain unedited (no heavy manipulation/compositing)',
-          'Final submissions must be uploaded by 25th June'
-        ],
-        contact: {
-          name: 'Farooq',
-          phone: '+91 93928 03340'
-        }
+const defaultCompetitions: any[] = [
+  {
+    id: 'build-diagnosis',
+    _id: 'build-diagnosis',
+    title: 'Build the Diagnosis',
+    category: 'Scientific',
+    description: 'A case-based diagnostic puzzle combining patient history, clinical signs, lab results, and logical reasoning.',
+    image: '/competitions/Diagnosis.png',
+    details: {
+      rules: [
+        'All UG students can participate (including interns)',
+        'A team must consist of exactly four members',
+        'Case-based diagnostic rounds and rapid-fire challenges',
+        'Tests quick clinical decision-making, history matching, and diagnostic reasoning',
+      ],
+      fee: '100/-',
+      contact: {
+        name: 'Harikrishna',
+        phone: '+91 91825 45949'
       }
     }
-  ];
+  },
+  {
+    id: 'debate',
+    _id: 'debate',
+    title: 'Medical Debate',
+    category: 'Creative',
+    description: 'Engage in thought-provoking formal discussions and rebuttals on critical bioethical and medical topics.',
+    image: '/competitions/Medical_debate.png',
+    details: {
+      rules: [
+        'Three-round structured debate formats',
+        'Opening statements: 3 minutes per team',
+        'Cross-questioning and direct rebuttals: 4 minutes',
+        'Closing remarks and audience interaction summary',
+        'Respectful dialogue; personal attacks result in direct disqualification'
+      ],
+      guidelines: [
+        'Judged on argumentation relevance, citation of studies, delivery, and structure'
+      ],
+      contact: {
+        name: 'Jaideep',
+        phone: '+91 90102 38700'
+      },
+      topic: 'Euthanasia: Compassionate Choice or Moral Misstep'
+    }
+  },
+  {
+    id: 'essay',
+    _id: 'essay',
+    title: 'Essay Writing',
+    category: 'Scientific',
+    description: 'Express your insights on contemporary medical challenges through academically rigorous and compelling essays.',
+    image: '/competitions/essaywriting.png',
+    details: {
+      topic: 'De-Stigmatising the Demon: Reframing HIV Beyond Fear and Prejudice',
+      contact: {
+        name: 'Renuka Priya',
+        phone: '+91 95738 70164'
+      },
+      rules: [
+        'Essay must be written between 1000 - 1500 words',
+        'Formatting should align with standardized MLA guidelines for citations',
+        'Plagiarism of any form leads to instant disqualification',
+      ],
+    }
+  },
+  {
+    id: 'reels',
+    _id: 'reels',
+    title: 'Medical Reels',
+    category: 'Creative',
+    description: 'Create engaging, informative, and visually stunning short-form social video content explaining medical phenomena.',
+    image: '/competitions/Medical_Reels.png',
+    details: {
+      rules: [
+        'Pure vector animations are not accepted; must involve live presentation/acting',
+        'Abusive language, copyrighted music, and censored material strictly prohibited',
+        'Top 3 selected films will be screened live during Movie Night (28th June)',
+        'All final reel file submissions must be completed by 25th June'
+      ],
+      guidelines: [
+        'Judged on conceptual accuracy, acting/expression, sound clarity, and cinematography'
+      ],
+      contact: {
+        name: 'Atchuth Ram',
+        phone: '+91 85238 63076'
+      }
+    }
+  },
+  {
+    id: 'seminar',
+    _id: 'seminar',
+    title: 'Integrated Seminar',
+    category: 'Scientific',
+    description: 'Present clinical cases and explain complex medical topics from pathophysiological mechanism to clinical management.',
+    image: '/competitions/Seminar.png',
+    details: {
+      rules: [
+        'Presentations must follow the recommended structured formatting',
+        'A maximum of 10 slides is permitted (excluding title and reference slide)',
+        'Utilisation of visual models, flowcharts, and diagrams is highly encouraged',
+        'Registration fee: ₹100'
+      ],
+      guidelines: [
+        'Slide 1: Title and clinical vignette overview',
+        'Slide 2-3: Pathophysiology (molecular/cellular models)',
+        'Slide 4: Clinical Presentation (symptomatology, examination)',
+        'Slide 5: Diagnostic investigations with clinical rationale',
+        'Slide 6-7: Therapeutic management (evidence-based updates)',
+        'Slide 8: Crucial clinical takeaways',
+        'Slide 9: References'
+      ],
+      judgingCriteria: [
+        'Scientific accuracy & literature citation depth - 10 marks',
+        'Integration of pathophysiology with management outcomes - 10 marks',
+        'Clarity, visual appeal, & slide layout - 10 marks',
+        'Time adherence & public speaking delivery - 10 marks',
+        'Handling Q&A jury questions - 10 marks'
+      ],
+      topics: [
+        'Chronic Kidney Disease (CKD)',
+        'Ischemic Stroke Pathophysiology',
+        'Diabetes Mellitus & Microvascular Complications',
+        'Hypo- and Hyperthyroidism Emergency Care',
+        'Acute Kidney Injury (AKI) in Critically Ill Patients',
+        'Gastrointestinal Bleed Management',
+        'Rheumatoid Arthritis Immunotherapy',
+        'Hypertensive Urgency and Emergency care',
+        'ACS Timeline Guidelines',
+        'SLE Pathophysiology'
+      ],
+      contact: {
+        name: 'Shubham',
+        phone: '+91 88856 60398'
+      },
+      awards: [
+        'Best Integrated Seminar Presentation - Trophy & Cash Awards'
+      ]
+    }
+  },
+  {
+    id: 'photography',
+    _id: 'photography',
+    title: 'Photography Competition',
+    category: 'Creative',
+    description: 'Capture the essence of college life, medical heritage, and campus beauty through your photography lens.',
+    image: '/competitions/Photography.png',
+    details: {
+      theme: 'Our Heritage & Campus Life',
+      rules: [
+        'Submissions must include a 2-line conceptual description',
+        'All photographs must be captured on-campus during the fest week',
+        'Images must remain unedited (no heavy manipulation/compositing)',
+        'Final submissions must be uploaded by 25th June'
+      ],
+      contact: {
+        name: 'Farooq',
+        phone: '+91 93928 03340'
+      }
+    }
+  }
+];
+
+const CompetitionsPage: React.FC = () => {
+  const [selectedCompetition, setSelectedCompetition] = useState<any | null>(null);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [activeTab, setActiveTab] = useState<string>('All');
+  const [competitions, setCompetitions] = useState<any[]>(defaultCompetitions);
+  const [registerModalOpen, setRegisterModalOpen] = useState(false);
+
+  useEffect(() => {
+    fetch('http://localhost:5000/api/competitions')
+      .then((res) => {
+        if (!res.ok) throw new Error('Failed to fetch');
+        return res.json();
+      })
+      .then((data) => {
+        if (Array.isArray(data) && data.length > 0) {
+          const getIcon = (id: string, category: string) => {
+            const normId = id?.toLowerCase() || '';
+            if (normId.includes('diagnosis')) return <Brain className="h-6 w-6" />;
+            if (normId.includes('debate')) return <MessageSquare className="h-6 w-6" />;
+            if (normId.includes('essay')) return <PenTool className="h-6 w-6" />;
+            if (normId.includes('reel') || normId.includes('video')) return <Video className="h-6 w-6" />;
+            if (normId.includes('seminar') || normId.includes('presentation')) return <Presentation className="h-6 w-6" />;
+            if (normId.includes('photo') || normId.includes('camera')) return <Camera className="h-6 w-6" />;
+            return category === 'Creative' ? <Camera className="h-6 w-6" /> : <Brain className="h-6 w-6" />;
+          };
+
+          // Map MongoDB _id to id if missing for backwards compatibility in modal triggers
+          const mapped = data.map((c: any) => {
+            const localId = c.id || c._id;
+            const localFallback = defaultCompetitions.find(d => d.id === localId || d.id === c.title.toLowerCase().replace(/[^a-z0-9]+/g, '-'));
+            
+            return {
+              ...c,
+              id: localId,
+              icon: localFallback?.icon || getIcon(localId, c.category || 'Scientific'),
+              details: {
+                rules: c.rules && c.rules.length > 0 ? c.rules : (localFallback?.details?.rules || []),
+                guidelines: c.guidelines && c.guidelines.length > 0 ? c.guidelines : (localFallback?.details?.guidelines || []),
+                topics: c.topics && c.topics.length > 0 ? c.topics : (localFallback?.details?.topics || []),
+                judgingCriteria: c.judgingCriteria && c.judgingCriteria.length > 0 ? c.judgingCriteria : (localFallback?.details?.judgingCriteria || []),
+                fee: c.price !== undefined ? `${c.price}/-` : (localFallback?.details?.fee || '100/-'),
+                topic: c.topics && c.topics.length > 0 ? c.topics[0] : (localFallback?.details?.topic || ''),
+                contact: c.contacts && c.contacts.length > 0 ? c.contacts[0] : (localFallback?.details?.contact || null)
+              }
+            };
+          });
+          setCompetitions(mapped);
+        }
+      })
+      .catch((err) => {
+        console.warn('API down, using local fallback competitions data.', err);
+      });
+  }, []);
+
+  const categories = ['All', ...Array.from(new Set(competitions.map(c => c.category || 'General')))];
 
   const filteredCompetitions = competitions.filter(comp => {
     const matchesSearch = comp.title.toLowerCase().includes(searchQuery.toLowerCase()) || 
                           comp.description.toLowerCase().includes(searchQuery.toLowerCase());
-    const matchesTab = activeTab === 'All' || comp.category === activeTab;
+    const matchesTab = activeTab === 'All' || (comp.category || 'General') === activeTab;
     return matchesSearch && matchesTab;
   });
 
@@ -241,7 +291,7 @@ const CompetitionsPage: React.FC = () => {
       </section>
 
       {/* Main Content */}
-      <section className="section bg-white">
+      <section className="section bg-white" id="events-grid">
         <div className="container">
           <SectionTitle
             subtitle="Showcase Your Talent"
@@ -252,8 +302,8 @@ const CompetitionsPage: React.FC = () => {
           {/* Search and Filters Bar */}
           <div className="flex flex-col md:flex-row items-center justify-between gap-6 mt-12 mb-12 max-w-4xl mx-auto">
             {/* Filter Tabs */}
-            <div className="flex gap-2.5">
-              {(['All', 'Scientific', 'Creative'] as const).map((tab) => (
+            <div className="flex gap-2.5 flex-wrap">
+              {categories.map((tab) => (
                 <button
                   key={tab}
                   onClick={() => setActiveTab(tab)}
@@ -373,7 +423,7 @@ const CompetitionsPage: React.FC = () => {
                       Suggested Seminar Topics
                     </h4>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-2 max-h-48 overflow-y-auto p-1 bg-slate-50 rounded-xl border border-slate-100">
-                      {selectedCompetition.details.topics.map((topic, index) => (
+                      {selectedCompetition.details.topics.map((topic: string, index: number) => (
                         <div key={index} className="flex items-center text-xs text-slate-600 font-jakarta p-2.5 hover:bg-slate-100 rounded-lg">
                           <span className="h-1.5 w-1.5 bg-pink-500 rounded-full mr-2.5 shrink-0"></span>
                           <span>{topic}</span>
@@ -391,7 +441,7 @@ const CompetitionsPage: React.FC = () => {
                       Rules & Regulations
                     </h4>
                     <ul className="space-y-3 text-sm text-slate-500 font-jakarta">
-                      {selectedCompetition.details.rules.map((rule, index) => (
+                      {selectedCompetition.details.rules.map((rule: string, index: number) => (
                         <li key={index} className="flex items-start">
                           <span className="h-2 w-2 bg-sky-600 rounded-full mr-3 mt-1.5 shrink-0"></span>
                           <span className="leading-relaxed">{rule}</span>
@@ -409,7 +459,7 @@ const CompetitionsPage: React.FC = () => {
                       Guidelines & Evaluation
                     </h4>
                     <ul className="space-y-3 text-sm text-slate-500 font-jakarta">
-                      {selectedCompetition.details.guidelines.map((guideline, index) => (
+                      {selectedCompetition.details.guidelines.map((guideline: string, index: number) => (
                         <li key={index} className="flex items-start">
                           <span className="h-2 w-2 bg-sky-500 rounded-full mr-3 mt-1.5 shrink-0"></span>
                           <span className="leading-relaxed">{guideline}</span>
@@ -427,7 +477,7 @@ const CompetitionsPage: React.FC = () => {
                       Judging Matrix (Jury Scores)
                     </h4>
                     <ul className="space-y-2.5 text-sm text-slate-500 font-jakarta">
-                      {selectedCompetition.details.judgingCriteria.map((criteria, index) => (
+                      {selectedCompetition.details.judgingCriteria.map((criteria: string, index: number) => (
                         <li key={index} className="flex items-start">
                           <span className="h-2 w-2 bg-sky-600 rounded-full mr-3 mt-1.5 shrink-0"></span>
                           <span>{criteria}</span>
@@ -464,7 +514,10 @@ const CompetitionsPage: React.FC = () => {
                     </div>
                   )}
 
-                  <button className="w-full sm:w-auto btn-primary px-8 py-3 text-sm">
+                  <button 
+                    onClick={() => setRegisterModalOpen(true)}
+                    className="w-full sm:w-auto btn-primary px-8 py-3 text-sm"
+                  >
                     Register For Event
                   </button>
                 </div>
@@ -473,6 +526,15 @@ const CompetitionsPage: React.FC = () => {
           </div>
         )}
       </AnimatePresence>
+
+      {selectedCompetition && (
+        <RegistrationModal
+          isOpen={registerModalOpen}
+          onClose={() => setRegisterModalOpen(false)}
+          preSelectedType="competition"
+          preSelectedItem={selectedCompetition}
+        />
+      )}
 
       {/* Rewards Section */}
       <section className="section bg-slate-50 border-t border-slate-100">
@@ -524,7 +586,12 @@ const CompetitionsPage: React.FC = () => {
             Limited slots are available for active registrations. Coordinate with coordinators to lock in your slot.
           </p>
           <div className="pt-2">
-            <button className="btn-primary px-8 py-3.5 text-white">
+            <button 
+              onClick={() => {
+                document.getElementById('events-grid')?.scrollIntoView({ behavior: 'smooth' });
+              }}
+              className="btn-primary px-8 py-3.5 text-white"
+            >
               Secure Registration slot
             </button>
           </div>

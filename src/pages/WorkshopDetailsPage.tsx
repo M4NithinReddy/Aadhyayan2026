@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
+import RegistrationModal from '../components/RegistrationModal';
 import { Helmet } from 'react-helmet-async';
 import { motion } from 'framer-motion';
 import { Calendar, Clock, MapPin, Phone, ArrowLeft, Users } from 'lucide-react';
@@ -434,7 +435,75 @@ const workshops: Workshop[] = [
 
 const WorkshopDetailsPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
-  const workshop = workshops.find(w => w.id === id);
+  const [workshop, setWorkshop] = React.useState<Workshop | null>(() => {
+    return workshops.find(w => w.id === id) || null;
+  });
+  const [loading, setLoading] = React.useState<boolean>(!workshop);
+  const [modalOpen, setModalOpen] = useState(false);
+
+  React.useEffect(() => {
+    if (!id) return;
+    fetch(`http://localhost:5000/api/workshops/${id}`)
+      .then((res) => {
+        if (!res.ok) throw new Error('Failed to fetch');
+        return res.json();
+      })
+      .then((data) => {
+        if (data) {
+          const mappedSlots = (data.slots || []).map((slotStr: any, idx: number) => {
+            if (typeof slotStr === 'string') {
+              const parts = slotStr.split('|');
+              if (parts.length >= 2) {
+                return {
+                  id: `slot-${idx}`,
+                  time: parts[0]?.trim() || '',
+                  date: parts[1]?.trim() || data.date || 'Multiple Dates',
+                  paymentLink: parts[2]?.trim() || 'https://rzp.io/rzp/LTz3fhU'
+                };
+              }
+              return {
+                id: `slot-${idx}`,
+                time: slotStr,
+                date: data.date || 'Multiple Dates',
+                paymentLink: 'https://rzp.io/rzp/LTz3fhU'
+              };
+            }
+            return slotStr;
+          });
+
+          const localFallback = workshops.find(w => w.id === id);
+          
+          setWorkshop({
+            id: data.id || data._id,
+            title: data.title,
+            description: data.description,
+            date: data.date || localFallback?.date,
+            venue: data.venue || localFallback?.venue || '',
+            price: data.price || localFallback?.price || 0,
+            topics: data.topics && data.topics.length > 0 ? data.topics : (localFallback?.topics || []),
+            contacts: data.contacts && data.contacts.length > 0 ? data.contacts : (localFallback?.contacts || []),
+            image: data.image || localFallback?.image || 'https://images.pexels.com/photos/5726706/pexels-photo-5726706.jpeg',
+            slots: mappedSlots.length > 0 ? mappedSlots : (localFallback?.slots || [])
+          });
+        }
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.warn('API error, relying on fallback', err);
+        setLoading(false);
+      });
+  }, [id]);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen pt-32 pb-20 flex items-center justify-center bg-white">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-sky-600 mx-auto mb-4"></div>
+          <p className="text-slate-500 font-jakarta">Loading workshop details...</p>
+        </div>
+      </div>
+    );
+  }
 
   if (!workshop) {
     return (
@@ -538,14 +607,12 @@ const WorkshopDetailsPage: React.FC = () => {
                         <span className="text-slate-500">{slot.date}</span>
                       </div>
                       <div className="flex items-center justify-end mt-4">
-                        <a 
-                          href={slot.paymentLink}
-                          target="_blank"
-                          rel="noopener noreferrer"
+                        <button 
+                          onClick={() => setModalOpen(true)}
                           className="btn-primary text-sm px-6 py-2"
                         >
                           Register Now
-                        </a>
+                        </button>
                       </div>
                     </div>
                   ))}
@@ -589,6 +656,13 @@ const WorkshopDetailsPage: React.FC = () => {
           </div>
         </div>
       </section>
+
+      <RegistrationModal 
+        isOpen={modalOpen}
+        onClose={() => setModalOpen(false)}
+        preSelectedType="workshop"
+        preSelectedItem={workshop}
+      />
     </>
   );
 };

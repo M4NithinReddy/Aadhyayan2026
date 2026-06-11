@@ -58,7 +58,7 @@ const Header: React.FC<HeaderProps> = ({ isScrolled }) => {
           to="/" 
           className="flex items-center gap-3 font-montserrat font-bold text-xl text-white group"
         >
-          <span className="flex items-center transform group-hover:rotate-12 transition-transform duration-300">
+          <span className="flex items-center">
             <img 
               src={logo}
               alt="AMC Logo" 

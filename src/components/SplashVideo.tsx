@@ -73,6 +73,8 @@ const SplashVideo: React.FC<SplashVideoProps> = ({ onComplete }) => {
           <video
             ref={videoRef}
             src="/logoanimation.mp4"
+            autoPlay
+            muted
             playsInline
             preload="auto"
             className="absolute inset-0 w-full h-full object-cover"
