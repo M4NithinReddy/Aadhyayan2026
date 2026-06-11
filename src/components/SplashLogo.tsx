@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import logo from '../assets/images/logo.png';
 
 interface SplashLogoProps {
   onComplete: () => void;
@@ -8,15 +9,17 @@ interface SplashLogoProps {
 const SplashLogo: React.FC<SplashLogoProps> = ({ onComplete }) => {
   const [exiting, setExiting] = useState(false);
 
-  useEffect(() => {
-    // Show splash for 3.5 seconds, then transition out
-    const timer = setTimeout(() => {
-      setExiting(true);
-      setTimeout(onComplete, 800); // Allow fade-out animation to complete
-    }, 3500);
+  const dismiss = () => {
+    setExiting(true);
+    setTimeout(onComplete, 800); // Allow fade-out animation to complete
+  };
 
+  useEffect(() => {
+    // Auto-dismiss after 2.5 seconds
+    const timer = setTimeout(dismiss, 2500);
     return () => clearTimeout(timer);
-  }, [onComplete]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <AnimatePresence>
@@ -28,63 +31,42 @@ const SplashLogo: React.FC<SplashLogoProps> = ({ onComplete }) => {
           transition={{ duration: 0.8, ease: 'easeInOut' }}
           className="fixed inset-0 z-[9999] bg-black flex flex-col items-center justify-center overflow-hidden"
         >
-          {/* EKG / ECG Hospital Pulse Meter Line Animation */}
-          <div className="absolute inset-x-0 w-full flex items-center justify-center h-48 pointer-events-none opacity-40">
-            <svg
-              viewBox="0 0 800 200"
-              className="w-full h-full text-emerald-500"
-              preserveAspectRatio="none"
-            >
-              {/* EKG Line Path */}
-              <motion.path
-                d="M 0 100 L 150 100 L 170 85 L 190 115 L 210 100 L 250 100 L 270 30 L 290 170 L 310 100 L 350 100 L 370 85 L 390 115 L 410 100 L 500 100 L 520 20 L 540 180 L 560 100 L 620 100 L 640 85 L 660 115 L 680 100 L 800 100"
-                fill="transparent"
-                strokeWidth="3"
-                stroke="currentColor"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                initial={{ pathLength: 0 }}
-                animate={{ pathLength: [0, 1] }}
-                transition={{
-                  duration: 2.5,
-                  repeat: Infinity,
-                  ease: "linear",
-                }}
+          <div className="flex flex-col items-center justify-center gap-8 px-4">
+            {/* Rotating glowing ring container */}
+            <div className="relative w-32 h-32 md:w-44 md:h-44 flex items-center justify-center">
+              {/* Glowing Outer Ring */}
+              <div 
+                className="absolute inset-0 rounded-full border-2 border-t-sky-500 border-r-indigo-500 border-b-transparent border-l-transparent animate-spin" 
+                style={{ animationDuration: '1.2s' }} 
               />
-              {/* Secondary glowing line overlay */}
-              <motion.path
-                d="M 0 100 L 150 100 L 170 85 L 190 115 L 210 100 L 250 100 L 270 30 L 290 170 L 310 100 L 350 100 L 370 85 L 390 115 L 410 100 L 500 100 L 520 20 L 540 180 L 560 100 L 620 100 L 640 85 L 660 115 L 680 100 L 800 100"
-                fill="transparent"
-                strokeWidth="6"
-                stroke="currentColor"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                className="blur-sm opacity-50"
-                initial={{ pathLength: 0 }}
-                animate={{ pathLength: [0, 1] }}
-                transition={{
-                  duration: 2.5,
-                  repeat: Infinity,
-                  ease: "linear",
-                }}
+              <div 
+                className="absolute inset-2 md:inset-3 rounded-full border border-dashed border-sky-500/20 animate-spin" 
+                style={{ animationDuration: '4s', animationDirection: 'reverse' }} 
               />
-            </svg>
-          </div>
+              
+              {/* Logo Card with Pulse */}
+              <motion.div
+                animate={{ scale: [1, 1.05, 1] }}
+                transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
+                className="bg-white/5 border border-white/10 p-4 md:p-6 rounded-3xl md:rounded-[2rem] shadow-glass backdrop-blur-md"
+              >
+                <img
+                  src={logo}
+                  alt="AMC Logo"
+                  className="h-16 w-16 md:h-22 md:w-22 drop-shadow-[0_0_15px_rgba(6,182,212,0.5)]"
+                />
+              </motion.div>
+            </div>
 
-          {/* Logo Container (No pulse, steady entry) */}
-          <div className="relative flex flex-col items-center justify-center z-10 px-6">
-            <motion.div
-              initial={{ scale: 0.95, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              transition={{ duration: 0.8, ease: 'easeOut' }}
-              className="max-w-[240px] md:max-w-[300px]"
-            >
-              <img
-                src="/logo.jpeg"
-                alt="Adhyayan Logo"
-                className="w-full h-auto object-contain block bg-transparent"
-              />
-            </motion.div>
+            {/* Shimmer/Pulse Text */}
+            <div className="flex flex-col items-center gap-2 mt-2">
+              <h2 className="font-outfit font-extrabold text-2xl md:text-4xl tracking-widest text-transparent bg-clip-text bg-gradient-to-r from-sky-400 via-white to-indigo-400 animate-pulse text-center">
+                ADHYAYAN 2026
+              </h2>
+              <p className="text-slate-500 text-xs md:text-sm font-montserrat tracking-widest uppercase mt-1">
+                Loading...
+              </p>
+            </div>
           </div>
         </motion.div>
       )}

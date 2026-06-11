@@ -11,6 +11,8 @@ import AccommodationPage from './pages/AccommodationPage';
 import ContactPage from './pages/ContactPage';
 import NotFoundPage from './pages/NotFoundPage';
 import SplashLogo from './components/SplashLogo';
+import AdminLogin from './pages/admin/AdminLogin';
+import AdminDashboard from './pages/admin/AdminDashboard';
 
 function App() {
   const [showSplash, setShowSplash] = useState(true);
@@ -42,6 +44,10 @@ function App() {
           <Route path="contact" element={<ContactPage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Route>
+        
+        {/* Admin Console Route Nodes */}
+        <Route path="admin" element={<AdminLogin />} />
+        <Route path="admin/dashboard" element={<AdminDashboard />} />
       </Routes>
     </>
   );
